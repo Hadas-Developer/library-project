@@ -1,4 +1,5 @@
 ﻿using Library.Core.Models;
+using Library.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,27 +10,27 @@ namespace LibraryApplicastion.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-       //  public static List<Events> events = new List<Events>(){ new Events {Id=1,Title="wedding",Start=new DateTime(),End=new DateTime()}, new Events { Id = 2, Title = "Bar-mitzva", Start = new DateTime(), End = new DateTime() } };
-   
+    //  public static List<Events> events = new List<Events>(){ new Events {Id=1,Title="wedding",Start=new DateTime(),End=new DateTime()}, new Events { Id = 2, Title = "Bar-mitzva", Start = new DateTime(), End = new DateTime() } };
+
     public class CustomerController : ControllerBase
     {
-        private readonly IDataContext LibraryContext;
-        public CustomerController(IDataContext context)
+        private readonly ICustomerService _customerService;
+        public CustomerController(ICustomerService customerService)
         {
-            LibraryContext = context;
+            _customerService = customerService;
         }
         // GET: api/<CustomerController>
         [HttpGet]
         public IEnumerable<Customer> Get()
         {
-            return LibraryContext.customers;
+            return _customerService.GetCustomersList();
         }
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var index = LibraryContext.customers.Find(c => c.CustomerId == id);
+            var index = _customerService.GetCustomerById(id);
             if (index != null)
             {
                 return Ok(index);
@@ -39,20 +40,30 @@ namespace LibraryApplicastion.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public void Post([FromBody] Customer value)
+        public ActionResult Post([FromBody] Customer value)
         {
-            LibraryContext.customers.Add(value);
+            var cust = _customerService.GetCustomerById(value.CustomerId);
+            if (cust != null)
+            {
+                _customerService.GetCustomersList().Add(value);
+                return Ok(value);
+            }
+            return BadRequest();
+
         }
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Customer value)
+        public ActionResult Put(int id, [FromBody] Customer value)
         {
-            var index = LibraryContext.customers.FindIndex(c => c.CustomerId == id);
-            LibraryContext.customers[index].Address = value.Address;
-            LibraryContext.customers[index].BirthDate = value.BirthDate;
-            LibraryContext.customers[index].Name = value.Name;
-            LibraryContext.customers[index].NumBookLimit = value.NumBookLimit;
+            var cust = _customerService.GetCustomerById(id);
+            if (cust != null)
+            {
+                //לשלוח את הוליו לפונ' UPDATE
+                return Ok(value);
+            }
+            return BadRequest();
+
 
         }
 
@@ -60,8 +71,8 @@ namespace LibraryApplicastion.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var cust = LibraryContext.customers.Find(c => c.CustomerId == id);
-            LibraryContext.customers.Remove(cust);
+            var cust = _customerService.GetCustomersList().Find(c => c.CustomerId == id);
+            _customerService.GetCustomersList().Remove(cust);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LibraryApplicastion;
+﻿using Library.Core.Models;
+using LibraryApplicastion;
 using LibraryApplicastion.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,7 @@ namespace LibraryControllerTest
             var result = controller.Get();
 
             //ASSERT - בחלק זה נכריז על התוצאה שאנחנו מצפות לקבל מהפונקציה
-            Assert.IsType<List<Customer>>(result);
+            Assert.IsType<List<Book>>(result);
         }
 
         [Fact]

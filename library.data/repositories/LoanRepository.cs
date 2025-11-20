@@ -11,9 +11,15 @@ namespace Library.Data.Repositories
     public class LoanRepository : ILoanRepository
     {
         private readonly DataContext _context;
-        public Loan GetLoanByIdBook(int id)
+
+        public Loan GetLoanByDate(DateTime date)
         {
-            return _context.loans.Find(l=> l.BookId== id);
+            throw new NotImplementedException();
+        }
+
+        public Loan GetLoanById(int id)
+        {
+            return _context.(loan => loan.Id == id);
         }
 
         public List<Loan> GetLoans()

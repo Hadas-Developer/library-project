@@ -35,5 +35,9 @@ namespace Library.Service
         {
             return _bookRepository.GetBookByAuther(author);
         }
+        public Book Update(int id,Book b)
+        {
+           
+        }
     }
 }

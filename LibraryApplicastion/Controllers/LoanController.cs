@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Library.Core.Models;
+using Library.Core.Service;
+using Microsoft.AspNetCore.Mvc;
 using static System.Reflection.Metadata.BlobBuilder;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,31 +11,31 @@ namespace LibraryApplicastion.Controllers
     [ApiController]
     public class LoanController : ControllerBase
     {
-        private readonly IDataContext LibraryContext;
-        public LoanController(IDataContext context)
+        private readonly ILoanService _libraryContext;
+        public LoanController(ILoanService context)
         {
-            LibraryContext = context;
+            _libraryContext = context;
         }
         // GET: api/<LoanController>
         [HttpGet]
         public IEnumerable<Loan> Get()
         {
-            return LibraryContext.loans;
+            return _libraryContext.GetLoanList();
         }
 
         // GET api/<LoanController>/5
         [HttpGet("{id}")]
         public Loan Get(int id)
         {
-            var ind = LibraryContext.loans.FindIndex(l => l.BookId == id);
-            return LibraryContext.loans[ind];
+            var loan = _libraryContext.GetLoanByLoanId(id);
+            return loan;
         }
 
         // POST api/<LoanController>
         [HttpPost]
         public void Post([FromBody] Loan value)
         {
-            LibraryContext.loans.Add(value);
+            _libraryContext.GetLoanList().Add(value);
         }
 
         //// PUT api/<LoanController>/5
@@ -47,8 +49,8 @@ namespace LibraryApplicastion.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var index = LibraryContext.loans.FindIndex(l => l.BookId == id);
-            LibraryContext.loans.Remove(LibraryContext.loans[index]);
+            var index = _libraryContext.GetLoanList().FindIndex(l => l.BookId == id);
+            _libraryContext.GetLoanList().Remove(_libraryContext.GetLoanList()[index]);
         }
     }
 }
