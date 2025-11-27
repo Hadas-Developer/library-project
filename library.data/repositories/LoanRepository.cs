@@ -14,12 +14,12 @@ namespace Library.Data.Repositories
 
         public Loan GetLoanByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            return _context.loans.Find(c => c.LoanDate == date);
         }
 
-        public Loan GetLoanById(int id)
+        public Loan GetLoanByBookId(int id)
         {
-            return _context.(loan => loan.Id == id);
+            return _context.loans.Find(l => l.BookId == id);
         }
 
         public List<Loan> GetLoans()

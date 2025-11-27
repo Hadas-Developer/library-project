@@ -12,6 +12,8 @@ namespace Library.Core.Repository
         public List<Customer> GetCustomers();
 
         public Customer GetCustomerById(int id);
+        public Customer GetCustomerByBirthDate(DateTime date);
+        public Customer DeleteCustomer(int id);
 
     }
 }

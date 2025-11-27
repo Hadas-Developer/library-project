@@ -11,6 +11,20 @@ namespace Library.Data.Repositories
     public class CustomerRepository : ICustomersRepository
     {
         private readonly DataContext _context;
+        public CustomerRepository(DataContext context)
+        {
+            _context = context;
+        }
+
+        public Customer DeleteCustomer(int id)
+        {
+            return _context.customers.Find(c => c.CustomerId == id);
+        }
+
+        public Customer GetCustomerByBirthDate(DateTime date)
+        {
+            return _context.customers.Find(c => c.BirthDate == date);
+        }
 
         public Customer GetCustomerById(int id)
         {
@@ -22,5 +36,8 @@ namespace Library.Data.Repositories
             return _context.customers;
 
         }
+
+
+ 
     }
 }

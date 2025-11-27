@@ -1,5 +1,6 @@
 ﻿using Library.Core.Models;
 using Library.Core.Repository;
+using Library.Core.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,6 @@ namespace Library.Service
         public Book GetBooksByAuthor(string author)
         {
             return _bookRepository.GetBookByAuther(author);
-        }
-        public Book Update(int id,Book b)
-        {
-           
         }
     }
 }

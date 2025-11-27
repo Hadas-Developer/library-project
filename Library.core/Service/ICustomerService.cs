@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Service
+namespace Library.Core.Service
 {
     public interface ICustomerService
     {
@@ -14,5 +14,7 @@ namespace Library.Service
         //public Customer GetCustomerByName(string name);
         public Customer GetCustomerByBirthdate(DateTime date);
 
+        public Customer DeleteCustomer(int id);
+        
     }
 }

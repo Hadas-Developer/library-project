@@ -1,4 +1,5 @@
 ﻿using Library.Core.Models;
+using Library.Core.Service;
 using Library.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -21,9 +22,9 @@ namespace LibraryApplicastion.Controllers
         }
         // GET: api/<CustomerController>
         [HttpGet]
-        public IEnumerable<Customer> Get()
+        public ActionResult Get()
         {
-            return _customerService.GetCustomersList();
+            return Ok(_customerService.GetCustomersList());
         }
 
         // GET api/<CustomerController>/5
@@ -59,7 +60,6 @@ namespace LibraryApplicastion.Controllers
             var cust = _customerService.GetCustomerById(id);
             if (cust != null)
             {
-                //לשלוח את הוליו לפונ' UPDATE
                 return Ok(value);
             }
             return BadRequest();
@@ -69,10 +69,15 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var cust = _customerService.GetCustomersList().Find(c => c.CustomerId == id);
-            _customerService.GetCustomersList().Remove(cust);
+            var index = _customerService.DeleteCustomer(id);
+            if (index != null)
+            {
+                return Ok(index);
+            }
+            return NotFound();
+
         }
     }
 }

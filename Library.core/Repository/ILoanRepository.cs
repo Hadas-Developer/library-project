@@ -11,7 +11,7 @@ namespace Library.Core.Repository
     {
         public List<Loan> GetLoans();
 
-        public Loan GetLoanById(int id);
+        public Loan GetLoanByBookId(int id);
 
         public Loan GetLoanByDate(DateTime date);
     }

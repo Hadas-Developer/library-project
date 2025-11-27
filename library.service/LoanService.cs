@@ -24,7 +24,7 @@ namespace Library.Service
 
         public Loan GetLoanByLoanId(int loanId)
         {
-          return _loanRepository.GetLoanById(loanId);
+          return _loanRepository.GetLoanByBookId(loanId);
         }
 
         public List<Loan> GetLoanList()

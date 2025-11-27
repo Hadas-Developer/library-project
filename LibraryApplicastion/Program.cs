@@ -1,4 +1,10 @@
 
+using Library.Core.Repository;
+using Library.Core.Service;
+using Library.Data;
+using Library.Data.Repositories;
+using Library.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomersRepository, CustomerRepository>();
+
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+
+builder.Services.AddSingleton<DataContext>();
 
 var app = builder.Build();
 
@@ -26,5 +42,3 @@ app.MapControllers();
 
 app.Run();
 
-
-//לסיים את כל הפונקציות של העדכון וכל השאר
