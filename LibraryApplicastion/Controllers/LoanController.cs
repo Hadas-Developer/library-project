@@ -47,10 +47,15 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<LoanController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var index = _libraryContext.GetLoanList().FindIndex(l => l.BookId == id);
-            _libraryContext.GetLoanList().Remove(_libraryContext.GetLoanList()[index]);
+            var index = _libraryContext.GetLoanByLoanId(id);
+           if (index != null)
+            {
+                _libraryContext.GetLoanList().Remove(index);
+                return Ok(index);
+            }
+            return BadRequest();
         }
     }
 }

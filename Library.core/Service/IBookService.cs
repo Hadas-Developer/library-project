@@ -11,6 +11,11 @@ namespace Library.Core.Service
     {
         public List<Book> GetBooks();
         public Book GetBookById(int id);
-        public Book GetBooksByAuthor(string author);
+        public List<Book> GetBookByAuther(string author);
+
+        public Book DeleteBook(int Bid);
+        public Book UpdateBook(bool isAvailiable,int id);
+        public Book Add(Book book);
+
     }
 }

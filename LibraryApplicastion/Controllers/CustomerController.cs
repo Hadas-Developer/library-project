@@ -43,10 +43,9 @@ namespace LibraryApplicastion.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Customer value)
         {
-            var cust = _customerService.GetCustomerById(value.CustomerId);
-            if (cust != null)
+            var cust = _customerService.Add(value);
+            if (cust == null)
             {
-                _customerService.GetCustomersList().Add(value);
                 return Ok(value);
             }
             return BadRequest();
@@ -57,24 +56,23 @@ namespace LibraryApplicastion.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Customer value)
         {
-            var cust = _customerService.GetCustomerById(id);
+            var cust = _customerService.UpdateCustomer(id,value.NumBookLimit,value.Address);
             if (cust != null)
             {
                 return Ok(value);
             }
             return BadRequest();
-
-
         }
+
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var index = _customerService.DeleteCustomer(id);
-            if (index != null)
+            var c = _customerService.DeleteCustomer(id);
+            if (c != null)
             {
-                return Ok(index);
+                return Ok(c);
             }
             return NotFound();
 

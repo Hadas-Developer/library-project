@@ -19,44 +19,60 @@ namespace LibraryApplicastion.Controllers
         }
         // GET: api/<BookController>
         [HttpGet]
-        public IEnumerable<Book> Get()
+        public ActionResult Get()
         {
-            return _bookService.GetBooks();
+            return Ok(_bookService.GetBooks());
         }
 
         // GET api/<BookController>/5
         [HttpGet("{id}")]
-        public Book Get(int id)
+        public ActionResult Get(int id)
         {
-            var book = _bookService.GetBookById(id);
-            return book;
+            var index = _bookService.GetBookById(id);
+            if (index != null)
+            {
+                return Ok(index);
+            }
+            return NotFound();
         }
 
 
         // POST api/<EventsController>
         [HttpPost]
-        public void Post([FromBody] Book value)
+        public ActionResult Post([FromBody] Book value)
         {
-            _bookService.GetBooks().Add(value);
+            var book = _bookService.Add(value);
+            if (book == null)
+            {
+                return Ok(value);
+            }
+            return BadRequest();
+
         }
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Book value)// נראה לי שפה צריך רק אם הוא זמין וג'נר לא את כל הספר וכן הלאה על הכל. לשאול את יעל???????????????????????????????????????????????????????????????????????????????.
+        public ActionResult Put(int id, [FromBody] Book value)
         {
-            var index = _bookService.GetBookById(id);
-            index.IsAvailable = value.IsAvailable;
-            index.Genre = value.Genre;
-
-
+            var b = _bookService.UpdateBook(value.IsAvailable,id);
+            if (b != null)
+            {
+                return Ok(value);
+            }
+            return BadRequest();
         }
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var book = _bookService.GetBookById(id);
-            _bookService.GetBooks().Remove(book);
+            var c = _bookService.DeleteBook(id);
+            if (c != null)
+            {
+                return Ok(c);
+            }
+            return NotFound();
+
         }
     }
 }

@@ -11,10 +11,11 @@ namespace Library.Core.Service
     {
         public List<Customer> GetCustomersList();
         public Customer GetCustomerById(int id);
-        //public Customer GetCustomerByName(string name);
         public Customer GetCustomerByBirthdate(DateTime date);
 
         public Customer DeleteCustomer(int id);
+        public Customer UpdateCustomer(int id,int numBook,string address);
+        public Customer Add(Customer customer);
         
     }
 }

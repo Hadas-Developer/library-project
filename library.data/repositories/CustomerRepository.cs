@@ -16,11 +16,6 @@ namespace Library.Data.Repositories
             _context = context;
         }
 
-        public Customer DeleteCustomer(int id)
-        {
-            return _context.customers.Find(c => c.CustomerId == id);
-        }
-
         public Customer GetCustomerByBirthDate(DateTime date)
         {
             return _context.customers.Find(c => c.BirthDate == date);
@@ -37,7 +32,28 @@ namespace Library.Data.Repositories
 
         }
 
+        public Customer Update(int id, int numOfBooks, string address)
+        {
+            var cust = GetCustomerById(id);
+            cust.NumBookLimit = numOfBooks;
+            cust.Address = address;
+            return cust;
+        }
 
- 
+        public Customer Add(Customer c)
+        {
+            var cust = GetCustomerById(c.CustomerId);
+            if (cust == null)
+                _context.customers.Add(c);
+            return cust;
+        }
+
+        public Customer DeleteCustomer(int id)
+        {
+            var cust = GetCustomerById(id);
+            if (cust != null)
+                _context.customers.Remove(cust);
+            return cust;
+        }
     }
 }

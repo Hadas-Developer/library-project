@@ -12,7 +12,10 @@ namespace Library.Core.Repository
         public List<Book> GetBooks();
 
         public Book GetBookById(int id);
-        public Book GetBookByAuther(string author);
+        public List<Book> GetBookByAuther(string author);
 
+        public Book UpdateBook(bool isAvailiable, int id);
+        public Book Add(Book book);
+        public Book DeleteBook(int Bid);
     }
 }

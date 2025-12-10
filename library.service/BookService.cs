@@ -15,10 +15,8 @@ namespace Library.Service
 
         public BookService(IBookRepository bookRepository)
         {
-            //חישובים
             _bookRepository = bookRepository;
         }
-
         public Book GetBookById(int id)
         {
             //חישובים
@@ -32,9 +30,25 @@ namespace Library.Service
 
         }
 
-        public Book GetBooksByAuthor(string author)
+        public List<Book> GetBookByAuther(string author)
         {
             return _bookRepository.GetBookByAuther(author);
         }
+
+        public Book UpdateBook(bool isAvailiable,int id)
+        {
+        return _bookRepository.UpdateBook(isAvailiable,id);
+        }
+
+        public Book Add(Book book)
+        {
+            return _bookRepository.Add(book);
+        }
+
+        public Book DeleteBook(int Bid)
+        {
+           return _bookRepository.DeleteBook(Bid);
+        }
+
     }
 }

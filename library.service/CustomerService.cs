@@ -19,7 +19,7 @@ namespace Library.Service
 
         public Customer GetCustomerByBirthdate(DateTime date)
         {
-          
+
             return _customerRepository.GetCustomerByBirthDate(date);
         }
 
@@ -35,11 +35,22 @@ namespace Library.Service
         }
         public Customer DeleteCustomer(int id)
         {
-            var cust = _customerRepository.DeleteCustomer(id);
-            _customerRepository.GetCustomers().Remove(cust);
-            return cust;    
+               return _customerRepository.DeleteCustomer(id);
         }
 
+        public Customer UpdateCustomer(int id, int numBook, string address)
+        {
+            
+             return _customerRepository.Update(id,numBook,address);
+            
+        }
 
+        public Customer Add(Customer customer)
+        {
+            
+              return  _customerRepository.Add(customer);
+        }
+
+        
     }
 }

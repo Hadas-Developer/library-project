@@ -11,6 +11,10 @@ namespace Library.Data.Repositories
     public class LoanRepository : ILoanRepository
     {
         private readonly DataContext _context;
+        public LoanRepository(DataContext context)
+        {
+            _context = context;
+        }
 
         public Loan GetLoanByDate(DateTime date)
         {
