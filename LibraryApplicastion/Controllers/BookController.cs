@@ -52,12 +52,12 @@ namespace LibraryApplicastion.Controllers
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Book value)
+        public ActionResult Put(int id,  bool isa)
         {
-            var b = _bookService.UpdateBook(value.IsAvailable,id);
+            var b = _bookService.UpdateBook(isa,id);
             if (b != null)
             {
-                return Ok(value);
+                return Ok(isa);
             }
             return BadRequest();
         }

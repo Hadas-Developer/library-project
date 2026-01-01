@@ -37,18 +37,34 @@ namespace Library.Service
 
         public Book UpdateBook(bool isAvailiable,int id)
         {
-        return _bookRepository.UpdateBook(isAvailiable,id);
+        var b= _bookRepository.UpdateBook(isAvailiable,id);
+            _bookRepository.Save();
+            return b;
+
         }
 
         public Book Add(Book book)
         {
-            return _bookRepository.Add(book);
+            var b= _bookRepository.Add(book);
+            _bookRepository.Save();
+            return b;
         }
 
-        public Book DeleteBook(int Bid)
+        public Book DeleteBook(int bid)
         {
-           return _bookRepository.DeleteBook(Bid);
+            var b = _bookRepository.DeleteBook(bid);
+            _bookRepository.Save();
+            return b;
         }
+
+
+        public int GetAvailableBooksCount()
+        {
+            var books = _bookRepository.GetBooks();
+            return books.Count(b => b.IsAvailable);
+        }
+
+
 
     }
 }

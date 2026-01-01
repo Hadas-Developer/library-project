@@ -14,5 +14,7 @@ namespace Library.Core.Repository
         public Loan GetLoanByBookId(int id);
 
         public Loan GetLoanByDate(DateTime date);
+        public void Save();
+
     }
 }

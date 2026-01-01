@@ -1,5 +1,6 @@
 ﻿using Library.Core.Models;
 using Library.Core.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,17 @@ namespace Library.Data.Repositories
 
         public Customer GetCustomerByBirthDate(DateTime date)
         {
-            return _context.customers.Find(c => c.BirthDate == date);
+            return _context.customers.ToList().Find(c => c.BirthDate == date);
         }
 
         public Customer GetCustomerById(int id)
         {
-            return _context.customers.Find(c => c.CustomerId == id);
+            return _context.customers.ToList().Find(c => c.CustomerId == id);
         }
 
         public List<Customer> GetCustomers()
         {
-            return _context.customers;
+            return _context.customers.Include(x=>x.Books).ToList();
 
         }
 
@@ -54,6 +55,10 @@ namespace Library.Data.Repositories
             if (cust != null)
                 _context.customers.Remove(cust);
             return cust;
+        }
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

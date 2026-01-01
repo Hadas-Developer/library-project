@@ -17,5 +17,6 @@ namespace Library.Core.Repository
         public Book UpdateBook(bool isAvailiable, int id);
         public Book Add(Book book);
         public Book DeleteBook(int Bid);
+        public void Save();
     }
 }

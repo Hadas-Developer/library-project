@@ -17,18 +17,18 @@ namespace Library.Data.Repositories
         }
         public List <Book> GetBookByAuther(string author)
         {
-            return _context.books.FindAll(i=> i.Author == author);
+            return _context.books.ToList().FindAll(i=> i.Author == author);
 
         }
 
         public Book GetBookById(int id)
         {
-            return _context.books.Find(b => b.BookId == id);
+            return _context.books.ToList().Find(b => b.BookId == id);
         }
 
         public List<Book> GetBooks()
         {
-            return _context.books;
+            return _context.books.ToList();
         }
 
         public Book Update(bool isAvailiable,int id)
@@ -65,6 +65,11 @@ namespace Library.Data.Repositories
                 b.IsAvailable = isAvailiable;
             }
             return b;
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

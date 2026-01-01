@@ -4,6 +4,7 @@ using Library.Core.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,22 +36,33 @@ namespace Library.Service
         }
         public Customer DeleteCustomer(int id)
         {
-               return _customerRepository.DeleteCustomer(id);
+            var c = _customerRepository.DeleteCustomer(id);
+            ///..
+            ///..
+            ///
+
+            _customerRepository.Save();
+            return c;
         }
 
         public Customer UpdateCustomer(int id, int numBook, string address)
         {
-            
-             return _customerRepository.Update(id,numBook,address);
-            
+
+            var c = _customerRepository.Update(id, numBook, address);
+            _customerRepository.Save();
+            return c;
+
         }
 
         public Customer Add(Customer customer)
         {
-            
-              return  _customerRepository.Add(customer);
+            var c = _customerRepository.Add(customer);
+            _customerRepository.Save();
+            return c;
         }
 
+        ////
         
+
     }
 }
