@@ -18,50 +18,46 @@ namespace Library.Service
             _customerRepository = customerRepository;
         }
 
-        public Customer GetCustomerByBirthdate(DateTime date)
+        public async Task<Customer> GetCustomerByBirthdateAsync(DateTime date)
         {
 
-            return _customerRepository.GetCustomerByBirthDate(date);
+            return await _customerRepository.GetCustomerByBirthDateAsync(date);
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task< Customer> GetCustomerByIdAsync(int id)
         {
-            return _customerRepository.GetCustomerById(id);
+            return await _customerRepository.GetCustomerByIdAsync(id);
         }
 
-        public List<Customer> GetCustomersList()
+        public async Task< List<Customer>> GetCustomersListAsync()
         {
-            return _customerRepository.GetCustomers();
+            return await _customerRepository.GetCustomersAsync();
 
         }
-        public Customer DeleteCustomer(int id)
+        public async Task< Customer> DeleteCustomerAsync(int id)
         {
-            var c = _customerRepository.DeleteCustomer(id);
-            ///..
-            ///..
-            ///
+            var c =await _customerRepository.DeleteCustomerAsync(id);
 
-            _customerRepository.Save();
+            await _customerRepository.SaveAsync();
             return c;
         }
 
-        public Customer UpdateCustomer(int id, int numBook, string address)
+        public async Task<Customer> UpdateCustomerAsync(int id, int numBook, string address)
         {
 
-            var c = _customerRepository.Update(id, numBook, address);
-            _customerRepository.Save();
+            var c =await _customerRepository.UpdateAsync(id, numBook, address);
+          await  _customerRepository.SaveAsync();
             return c;
 
         }
 
-        public Customer Add(Customer customer)
+        public async Task< Customer> AddAsync(Customer customer)
         {
-            var c = _customerRepository.Add(customer);
-            _customerRepository.Save();
+            var c =await _customerRepository.AddAsync(customer);
+            await _customerRepository.SaveAsync();
             return c;
         }
 
-        ////
         
 
     }

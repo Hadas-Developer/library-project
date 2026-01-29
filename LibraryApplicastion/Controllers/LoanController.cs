@@ -18,24 +18,25 @@ namespace LibraryApplicastion.Controllers
         }
         // GET: api/<LoanController>
         [HttpGet]
-        public IEnumerable<Loan> Get()
+        public async Task< IEnumerable<Loan>> Get()
         {
-            return _libraryContext.GetLoanList();
+            return await _libraryContext.GetLoanListAsync();
         }
 
         // GET api/<LoanController>/5
         [HttpGet("{id}")]
-        public Loan Get(int id)
+        public async Task< Loan > Get(int id)
         {
-            var loan = _libraryContext.GetLoanByLoanId(id);
+            var loan =await _libraryContext.GetLoanByLoanIdAsync(id);
             return loan;
         }
 
         // POST api/<LoanController>
         [HttpPost]
-        public void Post([FromBody] Loan value)
+        public async Task Post([FromBody] Loan value)
         {
-            _libraryContext.GetLoanList().Add(value);
+            var l = await _libraryContext.GetLoanListAsync();
+                l.Add(value);
         }
 
         //// PUT api/<LoanController>/5
@@ -47,13 +48,21 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<LoanController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task< ActionResult >Delete(int id)
         {
-            var index = _libraryContext.GetLoanByLoanId(id);
-           if (index != null)
+            // var index =await _libraryContext.GetLoanByLoanIdAsync(id);
+            //if (index != null)
+            // {
+            //   await  _libraryContext.GetLoanListAsync().Remove(index);
+            //     return Ok(index);
+            // }
+            var loans = await _libraryContext.GetLoanListAsync();
+            var loan = await _libraryContext.GetLoanByLoanIdAsync(id);
+
+            if (loan != null)
             {
-                _libraryContext.GetLoanList().Remove(index);
-                return Ok(index);
+                loans.Remove(loan);
+                return Ok(loan);
             }
             return BadRequest();
         }

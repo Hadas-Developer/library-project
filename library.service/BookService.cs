@@ -17,50 +17,50 @@ namespace Library.Service
         {
             _bookRepository = bookRepository;
         }
-        public Book GetBookById(int id)
+        public async Task<Book> GetBookByIdAsync(int id)
         {
             //חישובים
-            return _bookRepository.GetBookById(id);
+            return await _bookRepository.GetBookByIdAsync(id);
         }
 
-        public List<Book> GetBooks()
+        public async Task<List<Book>> GetBooksAsync()
         {
 
-            return _bookRepository.GetBooks();
+            return await _bookRepository.GetBooksAsync();
 
         }
 
-        public List<Book> GetBookByAuther(string author)
+        public async Task<List<Book>> GetBookByAutherAsync(string author)
         {
-            return _bookRepository.GetBookByAuther(author);
+            return await _bookRepository.GetBookByAutherAsync(author);
         }
 
-        public Book UpdateBook(bool isAvailiable,int id)
+        public async Task<Book> UpdateBookAsync(bool isAvailiable, int id)
         {
-        var b= _bookRepository.UpdateBook(isAvailiable,id);
-            _bookRepository.Save();
+            var b = await _bookRepository.UpdateBookAsync(isAvailiable, id);
+            await _bookRepository.SaveAsync();
             return b;
 
         }
 
-        public Book Add(Book book)
+        public async Task<Book> AddAsync(Book book)
         {
-            var b= _bookRepository.Add(book);
-            _bookRepository.Save();
+            var b = await _bookRepository.AddAsync(book);
+            await _bookRepository.SaveAsync();
             return b;
         }
 
-        public Book DeleteBook(int bid)
+        public async Task<Book> DeleteBookAsync(int bid)
         {
-            var b = _bookRepository.DeleteBook(bid);
-            _bookRepository.Save();
+            var b = await _bookRepository.DeleteBookAsync(bid);
+            await _bookRepository.SaveAsync();
             return b;
         }
 
 
-        public int GetAvailableBooksCount()
+        public async Task< int> GetAvailableBooksCountAsync()
         {
-            var books = _bookRepository.GetBooks();
+            var books =await _bookRepository.GetBooksAsync();
             return books.Count(b => b.IsAvailable);
         }
 

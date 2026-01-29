@@ -9,14 +9,14 @@ namespace Library.Core.Repository
 {
     public interface ICustomersRepository
     {
-        public List<Customer> GetCustomers();
+        public  Task< List<Customer>> GetCustomersAsync();
 
-        public Customer GetCustomerById(int id);
-        public Customer GetCustomerByBirthDate(DateTime date);
-        public Customer DeleteCustomer(int id);
-        public Customer Update(int id, int numOfBooks, string address);
-        public Customer Add(Customer c);
-        public void Save();
+        public  Task <Customer> GetCustomerByIdAsync(int id);
+        public  Task<Customer> GetCustomerByBirthDateAsync(DateTime date);
+        public  Task<Customer> DeleteCustomerAsync(int id);
+        public  Task<Customer> UpdateAsync(int id, int numOfBooks, string address);
+        public  Task<Customer> AddAsync(Customer c);
+        public  Task<Task> SaveAsync();
 
 
     }

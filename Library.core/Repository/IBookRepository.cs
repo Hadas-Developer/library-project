@@ -9,14 +9,14 @@ namespace Library.Core.Repository
 {
     public interface IBookRepository
     {
-        public List<Book> GetBooks();
+        public Task<List<Book>> GetBooksAsync();
 
-        public Book GetBookById(int id);
-        public List<Book> GetBookByAuther(string author);
+        public  Task<Book> GetBookByIdAsync(int id);
+        public Task<List<Book>> GetBookByAutherAsync(string author);
 
-        public Book UpdateBook(bool isAvailiable, int id);
-        public Book Add(Book book);
-        public Book DeleteBook(int Bid);
-        public void Save();
+        public Task<Book> UpdateBookAsync(bool isAvailiable, int id);
+        public Task<Book> AddAsync(Book book);
+        public Task<Book> DeleteBookAsync(int Bid);
+        public Task SaveAsync();
     }
 }

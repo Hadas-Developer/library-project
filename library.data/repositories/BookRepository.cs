@@ -1,5 +1,6 @@
 ﻿using Library.Core.Models;
 using Library.Core.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,31 +16,33 @@ namespace Library.Data.Repositories
         {
             _context = context;
         }
-        public List <Book> GetBookByAuther(string author)
+        public async Task<List<Book>> GetBookByAutherAsync(string author)
         {
-            return _context.books.ToList().FindAll(i=> i.Author == author);
+            return await _context.books
+                        .Where(b => b.Author == author)
+                        .ToListAsync(); ;
 
         }
 
-        public Book GetBookById(int id)
+        public async Task<Book> GetBookByIdAsync(int id)
         {
-            return _context.books.ToList().Find(b => b.BookId == id);
+            return await _context.books.FirstOrDefaultAsync(b => b.BookId == id);
         }
 
-        public List<Book> GetBooks()
+        public async Task<List<Book>> GetBooksAsync()
         {
-            return _context.books.ToList();
+            return await _context.books.ToListAsync();
         }
 
-        public Book Update(bool isAvailiable,int id)
+        public async Task<Book> Update(bool isAvailiable, int id)
         {
-            var cust = GetBookById(id);
+            var cust = await GetBookByIdAsync(id);
             cust.IsAvailable = isAvailiable;
             return cust;
         }
-        public Book Add(Book book)
+        public async Task<Book> AddAsync(Book book)
         {
-            var cust = GetBookById(book.BookId);
+            var cust = await GetBookByIdAsync(book.BookId);
             if (cust == null)
             {
                 _context.books.Add(book);
@@ -47,19 +50,19 @@ namespace Library.Data.Repositories
             return cust;
         }
 
-        public Book DeleteBook(int Bid)
+        public async Task<Book> DeleteBookAsync(int Bid)
         {
-            var cust = GetBookById(Bid);
-            if(cust!=null)
+            var cust = await GetBookByIdAsync(Bid);
+            if (cust != null)
                 _context.books.Remove(cust);
             return cust;
         }
 
-       
 
-        public Book UpdateBook(bool isAvailiable, int id)
+
+        public async Task<Book> UpdateBookAsync(bool isAvailiable, int id)
         {
-            var b=GetBookById(id);
+            var b = await GetBookByIdAsync(id);
             if (b != null)
             {
                 b.IsAvailable = isAvailiable;
@@ -67,9 +70,9 @@ namespace Library.Data.Repositories
             return b;
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

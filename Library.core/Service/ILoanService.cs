@@ -9,8 +9,8 @@ namespace Library.Core.Service
 {
     public interface ILoanService
     {
-        public List<Loan> GetLoanList();
-        public Loan GetLoanByDate(DateTime date);
-        public Loan GetLoanByLoanId(int loanId);
+        public Task <List<Loan>> GetLoanListAsync();
+        public Task <Loan> GetLoanByDateAsync(DateTime date);
+        public Task <Loan> GetLoanByLoanIdAsync(int loanId);
     }
 }

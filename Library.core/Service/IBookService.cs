@@ -9,13 +9,12 @@ namespace Library.Core.Service
 {
     public interface IBookService
     {
-        public List<Book> GetBooks();
-        public Book GetBookById(int id);
-        public List<Book> GetBookByAuther(string author);
-
-        public Book DeleteBook(int Bid);
-        public Book UpdateBook(bool isAvailiable,int id);
-        public Book Add(Book book);
+        public  Task <List<Book>> GetBooksAsync();
+        public  Task <Book> GetBookByIdAsync(int id);
+        public  Task< List<Book> >GetBookByAutherAsync(string author);
+        public  Task <Book >DeleteBookAsync(int Bid);
+        public  Task <Book >UpdateBookAsync( bool isAvailible,int id);
+        public  Task<Book >AddAsync(Book book);
 
     }
 }

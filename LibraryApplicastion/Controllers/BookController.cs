@@ -19,16 +19,16 @@ namespace LibraryApplicastion.Controllers
         }
         // GET: api/<BookController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            return Ok(_bookService.GetBooks());
+            return Ok(await _bookService.GetBooksAsync());
         }
 
         // GET api/<BookController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task< ActionResult> Get(int id)
         {
-            var index = _bookService.GetBookById(id);
+            var index =await _bookService.GetBookByIdAsync(id);
             if (index != null)
             {
                 return Ok(index);
@@ -39,9 +39,9 @@ namespace LibraryApplicastion.Controllers
 
         // POST api/<EventsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Book value)
+        public async Task< ActionResult> Post([FromBody] Book value)
         {
-            var book = _bookService.Add(value);
+            var book =await _bookService.AddAsync(value);
             if (book == null)
             {
                 return Ok(value);
@@ -52,9 +52,9 @@ namespace LibraryApplicastion.Controllers
 
         // PUT api/<EventsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id,  bool isa)
+        public async Task<ActionResult> Put(int id,  bool isa)
         {
-            var b = _bookService.UpdateBook(isa,id);
+            var b =await _bookService.UpdateBookAsync(isa,id);
             if (b != null)
             {
                 return Ok(isa);
@@ -64,9 +64,9 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<EventsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(int id)
         {
-            var c = _bookService.DeleteBook(id);
+            var c =await _bookService.DeleteBookAsync(id);
             if (c != null)
             {
                 return Ok(c);

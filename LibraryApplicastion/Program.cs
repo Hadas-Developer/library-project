@@ -1,9 +1,11 @@
 
+using Library.Core;
 using Library.Core.Repository;
 using Library.Core.Service;
 using Library.Data;
 using Library.Data.Repositories;
 using Library.Service;
+using LibraryApplicastion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,8 @@ builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 
 builder.Services.AddDbContext<DataContext>();
+builder.Services.AddAutoMapper(typeof(MappingProfile), typeof(MappingModels));
+
 
 var app = builder.Build();
 

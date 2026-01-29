@@ -9,12 +9,10 @@ namespace Library.Core.Repository
 {
     public interface ILoanRepository
     {
-        public List<Loan> GetLoans();
-
-        public Loan GetLoanByBookId(int id);
-
-        public Loan GetLoanByDate(DateTime date);
-        public void Save();
+        public Task< List<Loan>> GetLoansAsync();
+        public Task< Loan> GetLoanByBookIdAsync(int id);
+        public Task<Loan> GetLoanByDateAsync(DateTime date);
+        public Task SaveAsync();
 
     }
 }

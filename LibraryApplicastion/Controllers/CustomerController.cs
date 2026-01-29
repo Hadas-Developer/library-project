@@ -22,16 +22,16 @@ namespace LibraryApplicastion.Controllers
         }
         // GET: api/<CustomerController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task< ActionResult >Get()
         {
-            return Ok(_customerService.GetCustomersList());
+            return Ok(await _customerService.GetCustomersListAsync());
         }
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task< ActionResult> Get(int id)
         {
-            var index = _customerService.GetCustomerById(id);
+            var index = await _customerService.GetCustomerByIdAsync(id);
             if (index != null)
             {
                 return Ok(index);
@@ -41,9 +41,9 @@ namespace LibraryApplicastion.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public ActionResult Post([FromBody] Customer value)
+        public async Task< ActionResult> Post([FromBody] Customer value)
         {
-            var cust = _customerService.Add(value);
+            var cust =await _customerService.AddAsync(value);
             if (cust == null)
             {
                 return Ok(value);
@@ -54,9 +54,9 @@ namespace LibraryApplicastion.Controllers
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Customer value)
+        public async Task< ActionResult> Put(int id, [FromBody] Customer value)
         {
-            var cust = _customerService.UpdateCustomer(id,value.NumBookLimit,value.Address);
+            var cust =await _customerService.UpdateCustomerAsync(id,value.NumBookLimit,value.Address);
             if (cust != null)
             {
                 return Ok(value);
@@ -67,9 +67,9 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(int id)
         {
-            var c = _customerService.DeleteCustomer(id);
+            var c =await _customerService.DeleteCustomerAsync(id);
             if (c != null)
             {
                 return Ok(c);

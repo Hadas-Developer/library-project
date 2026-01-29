@@ -17,19 +17,19 @@ namespace Library.Service
             _loanRepository = loanRepository;
         }
        
-        public Loan GetLoanByDate(DateTime date)
+        public async Task<Loan> GetLoanByDateAsync(DateTime date)
         {
-            return _loanRepository.GetLoanByDate(date);
+            return await _loanRepository.GetLoanByDateAsync(date);
         }
 
-        public Loan GetLoanByLoanId(int loanId)
+        public async Task< Loan> GetLoanByLoanIdAsync(int loanId)
         {
-          return _loanRepository.GetLoanByBookId(loanId);
+          return await _loanRepository.GetLoanByBookIdAsync(loanId);
         }
 
-        public List<Loan> GetLoanList()
+        public async Task< List<Loan>> GetLoanListAsync()
         {
-           return _loanRepository.GetLoans();
+           return await _loanRepository.GetLoansAsync();
         }
 
        

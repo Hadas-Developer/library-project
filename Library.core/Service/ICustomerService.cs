@@ -9,13 +9,12 @@ namespace Library.Core.Service
 {
     public interface ICustomerService
     {
-        public List<Customer> GetCustomersList();
-        public Customer GetCustomerById(int id);
-        public Customer GetCustomerByBirthdate(DateTime date);
-
-        public Customer DeleteCustomer(int id);
-        public Customer UpdateCustomer(int id,int numBook,string address);
-        public Customer Add(Customer customer);
+        public Task< List<Customer> >GetCustomersListAsync();
+        public Task< Customer> GetCustomerByIdAsync(int id);
+        public Task< Customer> GetCustomerByBirthdateAsync(DateTime date);
+        public Task< Customer> DeleteCustomerAsync(int id);
+        public Task< Customer> UpdateCustomerAsync(int id,int numBook,string address);
+        public Task< Customer> AddAsync(Customer customer);
         
     }
 }

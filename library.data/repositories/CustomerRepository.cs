@@ -17,48 +17,48 @@ namespace Library.Data.Repositories
             _context = context;
         }
 
-        public Customer GetCustomerByBirthDate(DateTime date)
+        public async Customer GetCustomerByBirthDateAsync(DateTime date)
         {
-            return _context.customers.ToList().Find(c => c.BirthDate == date);
+            return await _context.customers.FirstOrDefaultAsync(c => c.BirthDate == date);
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
         {
-            return _context.customers.ToList().Find(c => c.CustomerId == id);
+            return await _context.customers.FirstOrDefaultAsync(c => c.CustomerId == id);
         }
 
-        public List<Customer> GetCustomers()
+        public async Task<List<Customer>> GetCustomersAsync()
         {
-            return _context.customers.Include(x=>x.Books).ToList();
+            return await _context.customers.Include(x => x.Books).ToListAsync();
 
         }
 
-        public Customer Update(int id, int numOfBooks, string address)
+        public async Task<Customer> UpdateAsync(int id, int numOfBooks, string address)
         {
-            var cust = GetCustomerById(id);
+            var cust = await GetCustomerByIdAsync(id);
             cust.NumBookLimit = numOfBooks;
             cust.Address = address;
             return cust;
         }
 
-        public Customer Add(Customer c)
+        public async Customer AddAsync(Customer c)
         {
-            var cust = GetCustomerById(c.CustomerId);
+            var cust = await GetCustomerByIdAsync(c.CustomerId);
             if (cust == null)
                 _context.customers.Add(c);
             return cust;
         }
 
-        public Customer DeleteCustomer(int id)
+        public async Task<Customer> DeleteCustomerAsync(int id)
         {
-            var cust = GetCustomerById(id);
+            var cust = await GetCustomerByIdAsync(id);
             if (cust != null)
                 _context.customers.Remove(cust);
             return cust;
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
     }
 }

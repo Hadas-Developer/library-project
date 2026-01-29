@@ -17,24 +17,23 @@ namespace Library.Data.Repositories
             _context = context;
         }
 
-        public Loan GetLoanByDate(DateTime date)
+        public async Task< Loan> GetLoanByDateAsync(DateTime date)
         {
-            return _context.loans.ToList().Find(c => c.LoanDate == date);
+            return await _context.loans.FirstOrDefaultAsync(c => c.LoanDate == date);
         }
 
-        public Loan GetLoanByBookId(int id)
+        public async Task<Loan> GetLoanByBookIdAsync(int id)
         {
-            return _context.loans.ToList().Find(l => l.BookId == id);
+            return await _context.loans.FirstOrDefaultAsync(l => l.BookId == id);
         }
              
-        public List<Loan> GetLoans()
+        public async Task<List<Loan>> GetLoansAsync()
         {
-            return _context.loans.Include(c => c.Customer).ThenInclude(c=>c.Books).ToList();
-
+            return await _context.loans.Include(c => c.Customer).ThenInclude(c=>c.Books).ToListAsync();
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
     }
 }
