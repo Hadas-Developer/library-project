@@ -21,6 +21,10 @@ namespace Library.Data.Repositories
         {
             return await _context.loans.FirstOrDefaultAsync(c => c.LoanDate == date);
         }
+        public async Task<Loan> GetLoanByIdAsync(int id)
+        {
+            return await _context.loans.FirstOrDefaultAsync(l => l.LoanId == id);
+        }
 
         public async Task<Loan> GetLoanByBookIdAsync(int id)
         {
@@ -34,6 +38,20 @@ namespace Library.Data.Repositories
         public async Task SaveAsync()
         {
            await _context.SaveChangesAsync();
+        }
+        public async Task<Loan> AddAsync(Loan loan)
+        {
+            _context.loans.Add(loan);
+            return loan;
+        }
+        public async Task<Loan> DeleteAsync(int id)
+        {
+            var loan = await _context.loans.FirstOrDefaultAsync(l => l.LoanId == id);
+            if (loan != null)
+            {
+                _context.loans.Remove(loan);
+            }
+            return loan;
         }
     }
 }

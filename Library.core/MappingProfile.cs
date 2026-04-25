@@ -11,9 +11,9 @@ namespace Library.Core
 {
     public class MappingProfile : Profile
     {
-        MappingProfile()
+     public MappingProfile()
         {
-            CreateMap<Loan,LoanDTO>().ReverseMap(); 
+            CreateMap<Loan, LoanDTO>().ReverseMap();
         }
     }
 }

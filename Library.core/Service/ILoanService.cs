@@ -12,5 +12,7 @@ namespace Library.Core.Service
         public Task <List<Loan>> GetLoanListAsync();
         public Task <Loan> GetLoanByDateAsync(DateTime date);
         public Task <Loan> GetLoanByLoanIdAsync(int loanId);
+      public  Task<Loan> AddAsync(Loan loan);
+        public Task<Loan> DeleteAsync(int id);
     }
 }

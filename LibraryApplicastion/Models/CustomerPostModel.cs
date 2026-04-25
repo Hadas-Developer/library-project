@@ -6,5 +6,6 @@
         public string Address { get; set; }
         public DateTime BirthDate { get; set; }
         public int NumBookLimit { get; set; }
+        public string Phone { get; set; }
     }
 }

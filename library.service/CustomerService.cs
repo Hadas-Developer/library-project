@@ -42,11 +42,11 @@ namespace Library.Service
             return c;
         }
 
-        public async Task<Customer> UpdateCustomerAsync(int id, int numBook, string address)
+        public async Task<Customer> UpdateCustomerAsync(int id, int numBook, string address, string phone)
         {
 
-            var c =await _customerRepository.UpdateAsync(id, numBook, address);
-          await  _customerRepository.SaveAsync();
+            var c = await _customerRepository.UpdateAsync(id, numBook, address, phone);
+            await _customerRepository.SaveAsync();
             return c;
 
         }

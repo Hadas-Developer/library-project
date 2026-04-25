@@ -1,4 +1,6 @@
-﻿using Library.Core.Models;
+﻿using AutoMapper;
+using Library.Core.DTO;
+using Library.Core.Models;
 using Library.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using static System.Reflection.Metadata.BlobBuilder;
@@ -12,31 +14,44 @@ namespace LibraryApplicastion.Controllers
     public class LoanController : ControllerBase
     {
         private readonly ILoanService _libraryContext;
-        public LoanController(ILoanService context)
+        private readonly IMapper _mapper;
+
+        public LoanController(ILoanService context, IMapper mapper)
         {
             _libraryContext = context;
+            _mapper = mapper;
         }
         // GET: api/<LoanController>
         [HttpGet]
-        public async Task< IEnumerable<Loan>> Get()
+        public async Task<ActionResult> Get()
         {
-            return await _libraryContext.GetLoanListAsync();
+            return Ok(_mapper.Map<List<LoanDTO>>(await _libraryContext.GetLoanListAsync()));
         }
 
         // GET api/<LoanController>/5
         [HttpGet("{id}")]
-        public async Task< Loan > Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var loan =await _libraryContext.GetLoanByLoanIdAsync(id);
-            return loan;
+            var loan = await _libraryContext.GetLoanByLoanIdAsync(id);
+
+            if (loan == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<LoanDTO>(loan));
         }
 
         // POST api/<LoanController>
         [HttpPost]
-        public async Task Post([FromBody] Loan value)
+        public async Task<ActionResult> Post([FromBody] LoanDTO value)
         {
-            var l = await _libraryContext.GetLoanListAsync();
-                l.Add(value);
+            var loan = _mapper.Map<Loan>(value);
+
+            var result = await _libraryContext.AddAsync(loan);
+
+            if (result == null)
+                return BadRequest("Loan failed");
+
+            return Ok(_mapper.Map<LoanDTO>(result));
         }
 
         //// PUT api/<LoanController>/5
@@ -48,23 +63,16 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<LoanController>/5
         [HttpDelete("{id}")]
-        public async Task< ActionResult >Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            // var index =await _libraryContext.GetLoanByLoanIdAsync(id);
-            //if (index != null)
-            // {
-            //   await  _libraryContext.GetLoanListAsync().Remove(index);
-            //     return Ok(index);
-            // }
-            var loans = await _libraryContext.GetLoanListAsync();
-            var loan = await _libraryContext.GetLoanByLoanIdAsync(id);
+            var loan = await _libraryContext.DeleteAsync(id);
 
             if (loan != null)
             {
-                loans.Remove(loan);
                 return Ok(loan);
             }
-            return BadRequest();
+
+            return NotFound();
         }
     }
 }

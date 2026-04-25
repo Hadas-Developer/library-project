@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Library.Data.Repositories
             _context = context;
         }
 
-        public async Customer GetCustomerByBirthDateAsync(DateTime date)
+        public async Task< Customer> GetCustomerByBirthDateAsync(DateTime date)
         {
             return await _context.customers.FirstOrDefaultAsync(c => c.BirthDate == date);
         }
@@ -33,20 +34,24 @@ namespace Library.Data.Repositories
 
         }
 
-        public async Task<Customer> UpdateAsync(int id, int numOfBooks, string address)
+        public async Task<Customer> UpdateAsync(int id, int numOfBooks, string address, string phone)
         {
             var cust = await GetCustomerByIdAsync(id);
-            cust.NumBookLimit = numOfBooks;
-            cust.Address = address;
+
+            if (cust != null)
+            {
+                cust.NumBookLimit = numOfBooks;
+                cust.Address = address;
+                cust.phone = phone;
+            }
+
             return cust;
         }
 
-        public async Customer AddAsync(Customer c)
+        public async Task<Customer> AddAsync(Customer c)
         {
-            var cust = await GetCustomerByIdAsync(c.CustomerId);
-            if (cust == null)
-                _context.customers.Add(c);
-            return cust;
+            _context.customers.Add(c);
+            return c;
         }
 
         public async Task<Customer> DeleteCustomerAsync(int id)
@@ -60,5 +65,7 @@ namespace Library.Data.Repositories
         {
            await _context.SaveChangesAsync();
         }
+
+     
     }
 }

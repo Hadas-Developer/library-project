@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Library.Core.DTO;
 using Library.Core.Models;
 using LibraryApplicastion.Models;
 
@@ -11,6 +12,7 @@ namespace LibraryApplicastion
             CreateMap<CustomerPostModel, Customer>();
             CreateMap<LoanPostModel, Loan>();
             CreateMap<CustomerPutModel, Customer>();
+            CreateMap<BookDTO, Book>();
         }
 
     }

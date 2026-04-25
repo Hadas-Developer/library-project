@@ -1,4 +1,6 @@
-﻿using Library.Core.Models;
+﻿using AutoMapper;
+using Library.Core.DTO;
+using Library.Core.Models;
 using Library.Core.Service;
 using Library.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,13 @@ namespace LibraryApplicastion.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
         private readonly IBookService _bookService;
-        public BookController(IBookService context)
+        public BookController(IBookService context,IMapper mapper)
         {
             _bookService = context;
+            _mapper = mapper;
         }
         // GET: api/<BookController>
         [HttpGet]
@@ -39,14 +44,13 @@ namespace LibraryApplicastion.Controllers
 
         // POST api/<EventsController>
         [HttpPost]
-        public async Task< ActionResult> Post([FromBody] Book value)
+        public async Task< ActionResult> Post([FromBody] BookDTO value)
         {
-            var book =await _bookService.AddAsync(value);
-            if (book == null)
-            {
-                return Ok(value);
-            }
-            return BadRequest();
+            var book = _mapper.Map<Book>(value);
+
+            var createdBook = await _bookService.AddAsync(book);
+            return Ok(createdBook);
+           
 
         }
 

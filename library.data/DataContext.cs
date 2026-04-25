@@ -1,5 +1,6 @@
 ﻿using Library.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Library.Data
 {
@@ -21,9 +22,14 @@ namespace Library.Data
         //    new Customer { CustomerId = 2, Name = "דנה כהן", Address = "שדרה 5, חיפה", BirthDate = new DateTime(1992, 11, 25) } };
 
         //}
+        private readonly IConfiguration _configuration;
+        public DataContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=library");
+            optionsBuilder.UseSqlServer(_configuration["ConnectionStrings"]);
         }
 
 

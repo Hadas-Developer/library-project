@@ -13,6 +13,9 @@ namespace Library.Core.Repository
         public Task< Loan> GetLoanByBookIdAsync(int id);
         public Task<Loan> GetLoanByDateAsync(DateTime date);
         public Task SaveAsync();
+        public Task<Loan> AddAsync(Loan loan);
+       public Task<Loan> GetLoanByIdAsync(int id);
+       public Task<Loan> DeleteAsync(int id);
 
     }
 }

@@ -1,6 +1,8 @@
-﻿using Library.Core.Models;
+﻿using AutoMapper;
+using Library.Core.Models;
 using Library.Core.Service;
 using Library.Service;
+using LibraryApplicastion.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,20 +18,24 @@ namespace LibraryApplicastion.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        private readonly IMapper _mapper;
+
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
+
         }
         // GET: api/<CustomerController>
         [HttpGet]
-        public async Task< ActionResult >Get()
+        public async Task<ActionResult> Get()
         {
             return Ok(await _customerService.GetCustomersListAsync());
         }
 
         // GET api/<CustomerController>/5
         [HttpGet("{id}")]
-        public async Task< ActionResult> Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
             var index = await _customerService.GetCustomerByIdAsync(id);
             if (index != null)
@@ -41,25 +47,31 @@ namespace LibraryApplicastion.Controllers
 
         // POST api/<CustomerController>
         [HttpPost]
-        public async Task< ActionResult> Post([FromBody] Customer value)
+        public async Task<ActionResult> Post([FromBody] CustomerPostModel value)
         {
-            var cust =await _customerService.AddAsync(value);
-            if (cust == null)
+            var customer = _mapper.Map<Customer>(value);
+
+            var cust = await _customerService.AddAsync(customer);
+
+            if (cust != null)
             {
-                return Ok(value);
+                return Ok(cust);
             }
+
             return BadRequest();
 
         }
 
         // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
-        public async Task< ActionResult> Put(int id, [FromBody] Customer value)
+        public async Task<ActionResult> Put(int id, [FromBody] CustomerPutModel value)
         {
-            var cust =await _customerService.UpdateCustomerAsync(id,value.NumBookLimit,value.Address);
+            var cust = await _customerService.UpdateCustomerAsync(id,value.NumBookLimit,value.Address,value.phone);
+
             if (cust != null)
             {
-                return Ok(value);
+                cust.phone = value.phone;
+                return Ok(cust);
             }
             return BadRequest();
         }
@@ -67,9 +79,9 @@ namespace LibraryApplicastion.Controllers
 
         // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
-        public async Task< ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var c =await _customerService.DeleteCustomerAsync(id);
+            var c = await _customerService.DeleteCustomerAsync(id);
             if (c != null)
             {
                 return Ok(c);

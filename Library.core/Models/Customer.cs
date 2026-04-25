@@ -11,6 +11,6 @@ namespace Library.Core.Models
         public DateTime BirthDate { get; set; }
         public int NumBookLimit { get; set; }
         public List<Book> Books { get; set; }
-        public int phone { get; set; }
+        public string phone { get; set; }
     }
 }

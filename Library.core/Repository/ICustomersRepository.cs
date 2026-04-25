@@ -14,9 +14,9 @@ namespace Library.Core.Repository
         public  Task <Customer> GetCustomerByIdAsync(int id);
         public  Task<Customer> GetCustomerByBirthDateAsync(DateTime date);
         public  Task<Customer> DeleteCustomerAsync(int id);
-        public  Task<Customer> UpdateAsync(int id, int numOfBooks, string address);
+        public  Task<Customer> UpdateAsync(int id, int numOfBooks, string address,string phone);
         public  Task<Customer> AddAsync(Customer c);
-        public  Task<Task> SaveAsync();
+        public  Task SaveAsync();
 
 
     }

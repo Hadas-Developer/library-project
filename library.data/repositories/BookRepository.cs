@@ -42,12 +42,8 @@ namespace Library.Data.Repositories
         }
         public async Task<Book> AddAsync(Book book)
         {
-            var cust = await GetBookByIdAsync(book.BookId);
-            if (cust == null)
-            {
-                _context.books.Add(book);
-            }
-            return cust;
+            _context.books.Add(book);
+            return book;
         }
 
         public async Task<Book> DeleteBookAsync(int Bid)
